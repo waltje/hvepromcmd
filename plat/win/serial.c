@@ -18,11 +18,18 @@
  *   along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "pch.h"
+#include <windows.h>
+#include <conio.h>
 
-#include "project.h"
-#include "serial.h"
-#include "pgm.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "../../project.h"
+#include "../../serial.h"
+#include "../../pgm.h"
 
 #ifdef UNICODE
 #error This cannot be built with UNICODE defined!

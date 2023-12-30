@@ -18,8 +18,6 @@ License along with the GNU C Library; if not, write to the Free
 Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
 02111-1307 USA.  */
 
-#include "pch.h"
-
 /* This tells Alpha OSF/1 not to define a getopt prototype in <stdio.h>.
 Ditto for AIX 3.2 and <stdlib.h>.  */
 #ifndef _NO_PROTO

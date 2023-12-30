@@ -1,12 +1,11 @@
-# Makefile for use with Xcode on macOS (11+) systems.
+# Makefile for use with GCC on UNIX-ish systems.
 
 ifndef ARCH
- ARCH	:= x64
+ ARCH	:= x86
 endif
 
-CC		:= cc
-LD		:= cc
-STRIP		:= strip
+CC		:= gcc
+LD		:= gcc
 RM		:= rm
 MV		:= mv
 MKDIR		:= mkdir
@@ -14,20 +13,22 @@ MKDIR		:= mkdir
 DEPDIR		:= .deps
 DEPFLAGS	= -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
-ifeq ($(ARCH),x64)
- AFLAG	:= -arch x86_64
+ifeq ($(ARCH),x86)
+ AFLAG	:= -m32
 else
- AFLAG	:= -arch arm64
+ AFLAG	:= -m64
 endif
 
 CFLAGS	:= $(AFLAG) -Wall -Os
-LDFLAGS	:= $(AFLAG)
+LDFLAGS	:= $(AFLAG) -s
 
 
 NAME	:= hvepromcmd
-SRCS	:= main.c pgm.c test_descriptions.c serial_posix.c util.c
+SRCS	:= main.c pgm.c test_descriptions.c serial.c util.c
 OBJ	:= $(SRCS:.c=.o)
 SYSOBJ	:=
+
+VPATH	:= . plat/unix
 
 
 .c.o:		$<
@@ -38,7 +39,6 @@ SYSOBJ	:=
 
 $(NAME):	$(SYSOBJ) $(OBJ)
 		$(LD) $(LDFLAGS) -o $@ $(SYSOBJ) $(OBJ)
-		@$(STRIP) $@
 
 
 clean:

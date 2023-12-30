@@ -18,7 +18,22 @@
  *   along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "pch.h"
+#ifdef _WIN32
+# include <windows.h>
+# include <conio.h>
+#else
+# include <fcntl.h>
+# include <termios.h>
+# include <unistd.h>
+# include <errno.h>
+# include <sys/ioctl.h>
+#endif
+
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "project.h"
 #include "test.h"

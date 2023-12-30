@@ -18,7 +18,22 @@
  *   along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "pch.h"
+#ifdef _WIN32
+# include <windows.h>
+# include <conio.h>
+#else
+# include <fcntl.h>
+# include <termios.h>
+# include <unistd.h>
+# include <errno.h>
+# include <sys/ioctl.h>
+#endif
+
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "project.h"
 #include "getopt.h"
@@ -26,6 +41,8 @@
 #include "pgm.h"
 #include "test.h"
 #include "util.h"
+#include "version.h"
+
 
 #define PROGRESS_BAR_SEGMENTS   58
 #define MCM6876X_DEFAULT_RETRIES    5
@@ -111,7 +128,7 @@ int main(int argc, char *argv[])
 
     memset(port_name, 0, sizeof(port_name));
 
-    while ((opt = getopt(argc, argv, "o:p:u:d:f:n:r:s:mbv?")) != -1)
+    while ((opt = getopt(argc, argv, "o:p:u:d:f:n:r:s:mbVv?")) != -1)
     {
         switch (opt)
         {
@@ -218,6 +235,13 @@ int main(int argc, char *argv[])
             {
                 blank_check = true;
                 break;
+            }
+            case 'V':
+            {
+		printf("%s (%s) version %s\nAuthor: %s\n%s\n%s\n",
+			APP_TITLE, APP_NAME, APP_VERSION,
+			APP_COMPANY, APP_COPYRIGHT, APP_LICENSE);
+                return EXIT_SUCCESS;
             }
             case 'v':
             {
@@ -381,6 +405,8 @@ out:
 static void help(const char *progname)
 {
     fprintf(stderr, "\r\nUsage: %s -o operation [options]\r\n\r\n"
+	"Show program version:\r\n\r\n"
+	"\t%s -V\r\n\r\n"
         "Read device to file:\r\n\r\n"
         "\t%s -o read -p PORT -d DEVICE -f FILE\r\n\r\n"
 #ifdef _WIN32
@@ -407,7 +433,7 @@ static void help(const char *progname)
         "Start the hardware test for the shield of a given device type:\r\n\r\n"
         "\t%s -o test -p PORT -s SHIELD_TYPE\r\n"
         "\tSHIELD_TYPE must be one of 1702A/270Xv1/270Xv2/MCM6876Xv1/MCM6876Xv2/MCS48\r\n\r\n",
-        progname, progname, progname, progname, MCM6876X_DEFAULT_RETRIES, progname, progname);
+        progname, progname, progname, progname, progname, MCM6876X_DEFAULT_RETRIES, progname, progname);
 }
 
 static bool target_read(port_handle_t port, device_type_t dev_type, const char *filename)
