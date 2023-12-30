@@ -25,7 +25,7 @@
 #include "pgm.h"
 
 #ifdef UNICODE
-#error Can't build this with UNICODE defined
+#error This cannot be built with UNICODE defined!
 #endif
 
 bool serial_open(const char *port_name, int baud, port_handle_t *port_handle)

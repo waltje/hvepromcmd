@@ -87,7 +87,6 @@ int main(int argc, char *argv[])
     bool hit_until_set = true;
     bool blank_check = false;
     bool verify = false;
-    bool slow = false;
     int opt = 0;
     int baud = 38400;
     int num_passes = 0;
