@@ -55,7 +55,9 @@ void terminal_setup(void)
     DWORD mode = 0;
 
     GetConsoleMode(stdout_handle, &mode);
+# ifdef ENABLE_VIRTUIAL_TERMINAL_PROCESSING
     mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+# endif
     SetConsoleMode(stdout_handle, mode);
 #endif /* _WIN32 */
 }

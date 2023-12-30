@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     shield_type_t shield_type = SHIELD_TYPE_UNKNOWN;
     port_handle_t port = DEFAULT_PORT_HANDLE;
 
-    if (!argv[1] || !strcmp(argv[1], "/?"))
+    if (!argv[1] || !strcmp(argv[1], "/?") || !strcmp(argv[1], "-?"))
     {
         // Can't parse '/' options - but a Windows person is likely to do at least this
         help(argv[0]);
