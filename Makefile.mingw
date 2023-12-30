@@ -1,12 +1,13 @@
-# Makefile for use with TinyC (TCC) on Windows.
+# Makefile for use with MinGW-w64 (GCC) on Windows systems.
 
 ifndef ARCH
  ARCH	:= x86
 endif
 
-CC	:= tcc
-LD	:= tcc
-RM	:= del 2>NUL /q
+CC		:= gcc
+LD		:= gcc
+RM		:= del 2>NUL
+
 
 ifeq ($(ARCH),x86)
  AFLAG	:= -m32
@@ -19,7 +20,8 @@ LDFLAGS	:= $(AFLAG) -s
 
 
 NAME	:= hvepromcmd.exe
-OBJ	:= main.o pgm.o test_descriptions.o serial_win32.o util.o
+SRCS	:= main.c pgm.c test_descriptions.c serial_win32.c util.c
+OBJ	:= $(SRCS:.c=.o)
 SYSOBJ	:= getopt.o
 
 
@@ -32,10 +34,10 @@ $(NAME):	$(SYSOBJ) $(OBJ)
 
 
 clean:
-		@$(RM) $(OBJ) $(SYSOBJ)
+		@$(RM) /q $(OBJ) $(SYSOBJ)
 
 clobber:	clean
-		@$(RM) $(NAME)
+		@$(RM) /q $(NAME)
 
 
 # End of file.
